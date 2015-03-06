@@ -1,5 +1,8 @@
 # Exercises for a scientific programming course:
 
+# Remember to uncomment library() for the libs used in this script for the first run
+# in a session.
+
 # Set working directory:
 setwd("~/Desktop/training/Shell_R_Python/python/data/")
 
@@ -77,5 +80,47 @@ dataset1$Patient <- sprintf("Patient_%03d", 1:nrow(dataset1))
 #install.packages("dplyr")
 #library("dplyr")
 
+# "The following objects are masked from ‘package:base’:" - if there are libraries
+# which have functions with the same names - it will use the function from the latest
+# loaded library.
 
+# Changing from wide to long format (excluding the Patient column from shaping):
+head(dataset1)
+dataset1_shaped <- gather(dataset1, Day, Inflammation_Level, -Patient)
+View(dataset1_shaped)
+dataset1_reshaped <- spread(dataset1_shaped, Day, Inflammation_Level)
 
+# Plotting with ggplot:
+#library(ggplot2)
+
+# Standard datasets for ggplot (iris, cars and mtcars):
+head(iris)
+head(mtcars)
+
+# Scatterplots:
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width))+geom_point()
+
+ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width, color=Species))+geom_point()
+p <- ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width, 
+                       color=Species))+geom_point(aes(size=Species))
+ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width, 
+                           color=Species))+geom_point(aes(size=Sepal.Length))
+pp <- p+geom_point(aes(size=Species))+facet_wrap(~Species)
+ppp <- pp+stat_smooth(method="lm")
+
+dataset1_plot <- ggplot(dataset1_shaped, aes(x=Day,
+                                             y=Inflammation_Level,
+                                             color=Patient))+geom_point()
+
+dataset1_plot <- dataset1_plot+facet_wrap(~Patient)
+
+dataset1_plot <- ggplot(dataset1_shaped, aes(x=Day,
+                                             y=Inflammation_Level))+geom_boxplot()
+
+dataset1_plot <- ggplot(dataset1_shaped,
+                        aes(x=Day,
+                            y=Inflammation_Level))+geom_boxplot()+geom_point()
+
+# Documenting code in R and exporting to HTML:
+#comments as plain text in {} (???), knitr for automatic reports
+#return(day_sum)
