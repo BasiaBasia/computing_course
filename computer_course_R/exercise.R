@@ -122,5 +122,6 @@ dataset1_plot <- ggplot(dataset1_shaped,
                             y=Inflammation_Level))+geom_boxplot()+geom_point()
 
 # Documenting code in R and exporting to HTML:
-#comments as plain text in {} (???), knitr for automatic reports
+#comments as plain text in {} (???) R markdown, knitr for automatic reports
 #return(day_sum)
+# Shiny for interactive plots
