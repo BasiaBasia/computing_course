@@ -18,7 +18,7 @@ days <- c(0.5:9.5)
 #Plot data for each mouse separately - weight vs embryonic day. Label each strain
 #with a different colour:
 plot(days, weights.subset[1,], type="l", xlab="embryonic day", ylab="weight [g]",
-     xlim=c(0.5, max(days)-3), ylim=c(16, max(weights.subset, na.rm=T)), col="red")
+     xlim=c(0.5, max(days)-2), ylim=c(16, max(weights.subset, na.rm=T)), col="red")
 for (i in 2:length(rownames(weights.subset))) {
   if (weights$mouse.weight..g..records[i]=="C57BL/6JOlaHsd") {
     colour="red"
@@ -28,8 +28,17 @@ for (i in 2:length(rownames(weights.subset))) {
 }
 
 #Calculate statistics for weight gain:
-change <- c(weights.subset[,7][1:5]-weights.subset[,1][1:5],
-            weights.subset[,6][6:10]-weights.subset[,1][6:10])
+#Change of weight from E0.5 to the last day:
+change <- c(weights.subset[,8][1:5]-weights.subset[,1][1:5],
+            weights.subset[,7][6:10]-weights.subset[,1][6:10])
+names(change) <- weights[,1]
+
+
 mean(change)
+median(change)
+
+#Weight gain per day:
+change.per.day <- change/(length(names(weights.subset))-2)
+
 #Test differences in weight gain between genotypes:
 t.test()
