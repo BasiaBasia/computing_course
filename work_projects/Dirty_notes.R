@@ -13,7 +13,7 @@ subset.column.names <- column.names[3:length(column.names)]
 weights.subset <- subset(weights, select=subset.column.names)
 
 #Set values for x variable:
-days <- c(0.5:12.5)
+days <- c(0.5:21.5)
 
 #Plot data for each mouse separately - weight vs embryonic day. Label each strain
 #with a different colour:
@@ -26,12 +26,14 @@ for (i in 2:length(rownames(weights.subset))) {
       colour="blue"}
   lines(days, weights.subset[i,], col=colour)
 }
+strain_names <- c("C57BL/6JOlaHsd", "A/JolaHsd")
+legend(0, (max(weights.subset, na.rm=T)), strain_names, col = c("red", "blue"))
 
 #Calculate statistics for weight gain:
 #Change of weight from E0.5 to the last day:
-change <- c(weights.subset[,13][1:5]-weights.subset[,1][1:5],
-            weights.subset[,12][6:10]-weights.subset[,1][6:10],
-            weights.subset[,4][11:14]-weights.subset[,1][11:14])
+change <- c(weights.subset[,17][1:5]-weights.subset[,1][1:5],
+            weights.subset[,16][6:10]-weights.subset[,1][6:10],
+            weights.subset[,10][11:14]-weights.subset[,1][11:14])
 names(change) <- weights[,1]
 
 mean(change)
